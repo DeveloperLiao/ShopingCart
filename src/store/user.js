@@ -1,5 +1,5 @@
 // 登录和注册的仓库
-import { sendCode, registerUser } from '@/api/index.js'
+import { sendCode, registerUser, loginUser } from '@/api/index.js'
 const state = {
   // 验证码
   code: ''
@@ -25,6 +25,11 @@ const actions = {
     } else {
       return Promise.reject(new Error(result.message))
     }
+  },
+  //登录
+  async loginUser({commit}, data) {
+    let result = await loginUser(data)
+    console.log(result)
   }
 }
 const getters = {}

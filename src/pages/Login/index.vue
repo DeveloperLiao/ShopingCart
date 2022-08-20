@@ -13,6 +13,8 @@
               type="text"
               name=""
               id=""
+              placeholder="请输入手机号"
+              v-model="phone"
             >
           </div>
           <div>
@@ -20,6 +22,8 @@
               type="text"
               name=""
               id=""
+              placeholder="请输入密码"
+              v-model='password'
             >
           </div>
           <div>
@@ -32,7 +36,7 @@
           </div>
           <div>
             <button>
-              <a href="">登录</a>
+              <a @click="loginUser">登录</a>
             </button>
           </div>
           <div class="bottom">
@@ -57,9 +61,7 @@
             <span><a href="">立即注册</a></span>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
   <div class="copyright">
@@ -80,7 +82,21 @@
 
 <script>
 export default {
-  name: 'MyLogin'
+  name: 'MyLogin',
+  data() {
+    return {
+      phone: '',
+      password: ''
+    }
+  },
+  methods: {
+    loginUser() {
+      let { phone, password } = this
+      let data = { phone, password }
+      // 手机号和密码必须都不为空才派发请求
+      phone && password && this.$store.dispatch('loginUser', data)
+    }
+  }
 }
 </script>
 

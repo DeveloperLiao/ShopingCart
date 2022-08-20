@@ -20,3 +20,5 @@ export const switchChecked = (skuid, isChecked) => request({ url: `api/cart/chec
 export const sendCode = phoneNum => request({ url: `api/user/passport/sendCode/${phoneNum}`, method: 'get' })
 // 注册用户
 export const registerUser = data => request({ url: 'api/user/passport/register', data, method: 'post' })
+// 登录
+export const loginUser = data => request({ url: 'api/user/passport/login', data, method: 'post' })
