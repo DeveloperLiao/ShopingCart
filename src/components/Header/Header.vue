@@ -4,9 +4,9 @@
       <nav class="nav">
         <div class="nav_left">
           <span>尚品汇欢迎您！</span>
-          <span v-if="!userInfo.name">请<router-link to="/login">登录</router-link>&nbsp;&nbsp;|&nbsp;&nbsp;免费<router-link to="/register">注册</router-link></span>
+          <span v-if="!userName">请<router-link to="/login">登录</router-link>&nbsp;&nbsp;|&nbsp;&nbsp;免费<router-link to="/register">注册</router-link></span>
           <!-- 显示用户名 -->
-          <span v-else="userInfo.name">{{userInfo.name}}&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="loginOut">退出登录</a></span>
+          <span v-else="userName">{{userName}}&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="loginOut">退出登录</a></span>
         </div>
         <div class="nav_right">
           <ul class="nav_listItem">
@@ -56,6 +56,13 @@ export default {
       key: ''
     }
   },
+  mounted() {
+    // 接受来自search组件的keyword值，将key值置空
+    this.$bus.on('keyword', val => {
+      this.key = val
+    })
+ 
+  },
   methods: {
     // 搜索
     goSort() {
@@ -83,25 +90,13 @@ export default {
       } catch (error) {
         alert(error.message)
       }
-    },
-    // 获取用户信息
-    async getUserInfo() {
-      await this.$store.dispatch('getUserInfo')
     }
   },
   computed: {
-    ...mapState({
-      // 拿到登录用户的数据
-      userInfo: state => state.user.userInfo
-    })
-  },
-  mounted() {
-    // 接受来自search组件的keyword值，将key值置空
-    this.$bus.on('keyword', val => {
-      this.key = val
-    })
-    // 获取用户信息
-    this.getUserInfo()
+    // 拿到登录用户的数据
+    userName() {
+      return this.$store.state.user.userInfo.name
+    }
   }
 }
 </script>

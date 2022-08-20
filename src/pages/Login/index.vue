@@ -33,7 +33,7 @@
           </div>
           <div>
             <button>
-              <a @click="loginUser">登录</a>
+              <a @click.prevent="loginUser">登录</a>
             </button>
           </div>
           <div class="bottom">

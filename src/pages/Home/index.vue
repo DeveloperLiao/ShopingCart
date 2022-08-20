@@ -46,7 +46,10 @@ export default {
     Band
   },
   mounted() {
+    // 获取floor组件的数据
     this.$store.dispatch('getFloorList')
+    // 获取用户信息在home首页显示
+    this.$store.dispatch('getUserInfo')
   },
   computed: {
     ...mapState({

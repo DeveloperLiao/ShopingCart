@@ -20,10 +20,9 @@ axios.interceptors.request.use(
       config.headers.userTempId = store.state.detail.uuid_token
     }
     // 在请求头中加入注册后获取的token,获取用户信息
-    if (localStorage.getItem('token')) {
+    if (store.state.user.token) {
       config.headers.token = store.state.user.token
     }
-
     return config
   },
   function (error) {

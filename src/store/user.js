@@ -12,6 +12,9 @@ const mutations = {
   SENDCODE(state, code) {
     state.code = code
   },
+  LOGINUSER(state, token) {
+    state.token = token
+  },
   GETUSERINFO(state, userInfo) {
     state.userInfo = userInfo
   },
@@ -41,8 +44,10 @@ const actions = {
   async loginUser({ commit }, data) {
     let result = await loginUser(data)
     if (result.code == 200) {
+      commit('LOGINUSER', result.data.token)
       // 持久化存储token
       saveToken(result.data.token)
+
       return 'ok'
     } else {
       return Promise.reject(new Error('faile'))
@@ -53,7 +58,6 @@ const actions = {
     let result = await getUserInfo()
     if (result.code == 200) {
       commit('GETUSERINFO', result.data)
-      return 'ok'
     }
   },
   //退出登录
