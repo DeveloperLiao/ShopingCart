@@ -6,7 +6,7 @@
           <span>尚品汇欢迎您！</span>
           <span v-if="!userInfo.name">请<router-link to="/login">登录</router-link>&nbsp;&nbsp;|&nbsp;&nbsp;免费<router-link to="/register">注册</router-link></span>
           <!-- 显示用户名 -->
-          <span v-else="userInfo.name">{{userInfo.name}}&nbsp;&nbsp;|&nbsp;&nbsp;<router-link to="">退出登录</router-link></span>
+          <span v-else="userInfo.name">{{userInfo.name}}&nbsp;&nbsp;|&nbsp;&nbsp;<a @click="loginOut">退出登录</a></span>
         </div>
         <div class="nav_right">
           <ul class="nav_listItem">
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api'
 import { mapState } from 'vuex'
 export default {
   name: 'MyHeader',
@@ -72,6 +73,20 @@ export default {
         this.$router.push(location)
       }
       this.$router.push(location)
+    },
+    // 退出登录
+    async loginOut() {
+      try {
+        // 退出登录后跳转到home页面
+        await this.$store.dispatch('loginOut')
+        this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
+      }
+    },
+    // 获取用户信息
+    async getUserInfo() {
+      await this.$store.dispatch('getUserInfo')
     }
   },
   computed: {
@@ -86,11 +101,7 @@ export default {
       this.key = val
     })
     // 获取用户信息
-    try {
-      this.$store.dispatch('getUserInfo')
-    } catch (error) {
-      console.log(error.message)
-    }
+    this.getUserInfo()
   }
 }
 </script>

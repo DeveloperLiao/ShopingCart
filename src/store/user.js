@@ -1,6 +1,6 @@
 // 登录和注册的仓库
-import { sendCode, registerUser, loginUser, getUserInfo } from '@/api/index.js'
-import { saveToken, getToken } from '@/utils/token'
+import { sendCode, registerUser, loginUser, getUserInfo, loginOut } from '@/api/index.js'
+import { saveToken, getToken, removeToken } from '@/utils/token'
 const state = {
   // 验证码
   code: '',
@@ -14,6 +14,10 @@ const mutations = {
   },
   GETUSERINFO(state, userInfo) {
     state.userInfo = userInfo
+  },
+  LOGINOUT(state) {
+    state.userInfo = {}
+    state.token = ''
   }
 }
 const actions = {
@@ -49,6 +53,16 @@ const actions = {
     let result = await getUserInfo()
     if (result.code == 200) {
       commit('GETUSERINFO', result.data)
+      return 'ok'
+    }
+  },
+  //退出登录
+  async loginOut({ commit }) {
+    let result = await loginOut()
+    if (result.code == 200) {
+      commit('LOGINOUT')
+      // 移除token
+      removeToken()
       return 'ok'
     } else {
       return Promise.reject(new Error('faile'))

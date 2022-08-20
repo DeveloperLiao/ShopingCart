@@ -24,3 +24,5 @@ export const registerUser = data => request({ url: 'api/user/passport/register',
 export const loginUser = data => request({ url: 'api/user/passport/login', data, method: 'post' })
 // 获取用户信息，携带token
 export const getUserInfo = () => request({ url: 'api/user/passport/auth/getUserInfo', method: 'get' })
+// 退出登录
+export const loginOut = () => request({ url: 'api/user/passport/logout', method: 'get' })
