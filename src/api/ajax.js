@@ -15,8 +15,15 @@ axios.interceptors.request.use(
   function (config) {
     //  发请求之前需要做些什么
     nprogress.start()
-    // 在请求头加入字段，让服务器识别身份
-    if (localStorage.getItem('uuid_token')) config.headers.userTempId = store.state.detail.uuid_token
+    // 在请求头加入临时身份ID，让服务器识别游客身份
+    if (localStorage.getItem('uuid_token')) {
+      config.headers.userTempId = store.state.detail.uuid_token
+    }
+    // 在请求头中加入注册后获取的token,获取用户信息
+    if (localStorage.getItem('token')) {
+      config.headers.token = store.state.user.token
+    }
+
     return config
   },
   function (error) {

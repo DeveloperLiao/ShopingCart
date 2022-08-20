@@ -3,7 +3,7 @@
     <div class="top">
       <div class="bgc"></div>
       <div class="bg_form">
-        <div class="form">
+        <form class="form">
           <div class="title">
             <span><a>扫码登录</a></span>
             <span><a class="active">账户登录</a></span>
@@ -11,19 +11,16 @@
           <div>
             <input
               type="text"
-              name=""
-              id=""
               placeholder="请输入手机号"
               v-model="phone"
             >
           </div>
           <div>
             <input
-              type="text"
-              name=""
-              id=""
+              type="password"
               placeholder="请输入密码"
               v-model='password'
+              autocomplete="off"
             >
           </div>
           <div>
@@ -60,7 +57,7 @@
             </div>
             <span><a href="">立即注册</a></span>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -90,11 +87,16 @@ export default {
     }
   },
   methods: {
-    loginUser() {
-      let { phone, password } = this
-      let data = { phone, password }
-      // 手机号和密码必须都不为空才派发请求
-      phone && password && this.$store.dispatch('loginUser', data)
+    // 用户登录
+    async loginUser() {
+      try {
+        let { phone, password } = this
+        let data = { phone, password }
+        // 手机号和密码必须都不为空才派发请求
+        phone && password && (await this.$store.dispatch('loginUser', data)) && this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
+      }
     }
   }
 }

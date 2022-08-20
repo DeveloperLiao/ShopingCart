@@ -4,7 +4,9 @@
       <nav class="nav">
         <div class="nav_left">
           <span>尚品汇欢迎您！</span>
-          <span>请<router-link to="/login">登录</router-link>&nbsp;&nbsp;|&nbsp;&nbsp;免费<router-link to="/register">注册</router-link></span>
+          <span v-if="!userInfo.name">请<router-link to="/login">登录</router-link>&nbsp;&nbsp;|&nbsp;&nbsp;免费<router-link to="/register">注册</router-link></span>
+          <!-- 显示用户名 -->
+          <span v-else="userInfo.name">{{userInfo.name}}&nbsp;&nbsp;|&nbsp;&nbsp;<router-link to="">退出登录</router-link></span>
         </div>
         <div class="nav_right">
           <ul class="nav_listItem">
@@ -44,14 +46,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'MyHeader',
   data() {
     return {
+      // 关键字
       key: ''
     }
   },
   methods: {
+    // 搜索
     goSort() {
       let location = {
         name: 'search',
@@ -69,11 +74,23 @@ export default {
       this.$router.push(location)
     }
   },
+  computed: {
+    ...mapState({
+      // 拿到登录用户的数据
+      userInfo: state => state.user.userInfo
+    })
+  },
   mounted() {
     // 接受来自search组件的keyword值，将key值置空
     this.$bus.on('keyword', val => {
       this.key = val
     })
+    // 获取用户信息
+    try {
+      this.$store.dispatch('getUserInfo')
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 }
 </script>

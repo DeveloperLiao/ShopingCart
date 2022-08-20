@@ -1,12 +1,19 @@
 // 登录和注册的仓库
-import { sendCode, registerUser, loginUser } from '@/api/index.js'
+import { sendCode, registerUser, loginUser, getUserInfo } from '@/api/index.js'
+import { saveToken, getToken } from '@/utils/token'
 const state = {
   // 验证码
-  code: ''
+  code: '',
+  // 用户的令牌
+  token: getToken(),
+  userInfo: {}
 }
 const mutations = {
   SENDCODE(state, code) {
     state.code = code
+  },
+  GETUSERINFO(state, userInfo) {
+    state.userInfo = userInfo
   }
 }
 const actions = {
@@ -27,9 +34,25 @@ const actions = {
     }
   },
   //登录
-  async loginUser({commit}, data) {
+  async loginUser({ commit }, data) {
     let result = await loginUser(data)
-    console.log(result)
+    if (result.code == 200) {
+      // 持久化存储token
+      saveToken(result.data.token)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('faile'))
+    }
+  },
+  // 获取用户信息
+  async getUserInfo({ commit }) {
+    let result = await getUserInfo()
+    if (result.code == 200) {
+      commit('GETUSERINFO', result.data)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('faile'))
+    }
   }
 }
 const getters = {}

@@ -22,3 +22,5 @@ export const sendCode = phoneNum => request({ url: `api/user/passport/sendCode/$
 export const registerUser = data => request({ url: 'api/user/passport/register', data, method: 'post' })
 // 登录
 export const loginUser = data => request({ url: 'api/user/passport/login', data, method: 'post' })
+// 获取用户信息，携带token
+export const getUserInfo = () => request({ url: 'api/user/passport/auth/getUserInfo', method: 'get' })
