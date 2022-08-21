@@ -1,0 +1,358 @@
+<template>
+  <div class="trade">
+    <h3>填写并核对订单信息</h3>
+    <div class="message">
+      <div class="addressee">
+        <h4>收件人信息</h4>
+        <div class="detail">
+          <div><span class="name active">张龙<span class="box"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+        </div>
+      </div>
+      <div class="split_line"></div>
+      <div class="payment">
+        <h4>支付方式</h4>
+        <div class="mode">
+          <div><span class="active">在线支付<span class="box"></span></span><span>货到付款</span></div>
+        </div>
+      </div>
+      <div class="split_line"></div>
+      <div class="list">
+        <h4>送货清单</h4>
+        <div>
+          <div class="delivery">
+            <h4>送货方式</h4>
+            <span class="active">天天快递<span class="box"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>配送时间：预计8月10日（周三）09:00-15:00送达</span>
+          </div>
+          <div class="goods">
+            <h4>送货清单</h4>
+            <div class="item">
+              <div class="goods_image">
+                <img
+                  src="./images/phone-1.jpg"
+                  style="width:100px;height:100px"
+                  alt=""
+                >
+              </div>
+              <div class="goods_name">
+                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
+                <p>7天无理由退货</p>
+              </div>
+              <div class="goods_price">
+                <span>￥1299.00</span>
+                &nbsp; &nbsp;
+                <span>1</span>
+                &nbsp; &nbsp;
+                <span>有货</span>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="goods_image">
+                <img
+                  src="./images/phone-1.jpg"
+                  style="width:100px;height:100px"
+                  alt=""
+                >
+              </div>
+              <div class="goods_name">
+                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
+                <p>7天无理由退货</p>
+              </div>
+              <div class="goods_price">
+                <span>￥1299.00</span>
+                &nbsp; &nbsp;
+                <span>1</span>
+                &nbsp; &nbsp;
+                <span>有货</span>
+              </div>
+            </div>
+            <div class="item">
+              <div class="goods_image">
+                <img
+                  src="./images/phone-1.jpg"
+                  style="width:100px;height:100px"
+                  alt=""
+                >
+              </div>
+              <div class="goods_name">
+                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
+                <p>7天无理由退货</p>
+              </div>
+              <div class="goods_price">
+                <span>￥1299.00</span>
+                &nbsp; &nbsp;
+                <span>1</span>
+                &nbsp; &nbsp;
+                <span>有货</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="leaving">
+          <h4>买家留言：</h4>
+          <textarea
+            rows="3"
+            cols="150"
+          ></textarea>
+        </div>
+        <div class="split_line"></div>
+        <div class="bill">
+          <h4>发票信息：</h4>
+          <div>
+            <span>普通发票（电子）个人明细</span>
+          </div>
+        </div>
+        <div class="discount">
+          <h4>使用优惠/抵用</h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="checked">
+      <div class="total">
+        <div>
+          <div>
+            <div>
+              <span><i class="num">4</i> 件商品，总商品金额</span>
+            </div>
+            <div>
+              <span>￥254699.00</span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <span>返现</span>
+            </div>
+            <div>
+              <span>0.00</span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <span>运费</span>
+            </div>
+            <div>
+              <span>0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payable">
+        <div>
+          <p>应付金额：<span>￥5399.00</span></p>
+          <p>配送至：广东深圳市宝安区，收货人：王五 134111111111</p>
+        </div>
+      </div>
+      <div class="btn">
+        <button><a>提交订单</a></button>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MyTrade'
+}
+</script>
+
+<style lang='less' scoped>
+.trade {
+  width: 1177px;
+  margin: 0 auto;
+  .message {
+    border: 1px solid #d5d5d5;
+    .addressee {
+      margin-top: 20px;
+      h4 {
+        padding: 20px;
+      }
+      .detail {
+        div {
+          .name {
+            display: inline-block;
+            width: 120px;
+            height: 35px;
+            border: 1px solid #d5d5d5;
+            text-align: center;
+            line-height: 35px;
+            margin: 10px;
+          }
+        }
+      }
+    }
+    .payment {
+      h4 {
+        padding: 20px;
+      }
+      .mode {
+        div {
+          > span {
+            display: inline-block;
+            width: 120px;
+            height: 35px;
+            border: 1px solid #d5d5d5;
+            text-align: center;
+            line-height: 35px;
+            margin: 10px;
+          }
+        }
+      }
+    }
+    .list {
+      > h4 {
+        padding: 20px;
+      }
+      .delivery {
+        width: 1100px;
+        margin: 0 auto;
+        background-color: #ececec;
+        > span:nth-of-type(1) {
+          display: inline-block;
+          width: 120px;
+          height: 35px;
+          border: 1px solid #d5d5d5;
+          text-align: center;
+          line-height: 35px;
+          margin: 10px;
+        }
+      }
+      .goods {
+        background-color: #f7e1e0;
+        width: 1100px;
+        margin: 10px auto;
+
+        .item {
+          display: flex;
+          padding: 10px 0;
+          .goods_image {
+            width: 120px;
+            margin-left: 20px;
+          }
+          .goods_name {
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            p:nth-of-type(2) {
+              color: #bc3427;
+            }
+          }
+          .goods_price {
+            span:nth-of-type(1) {
+              font-weight: bold;
+              color: #bc3427;
+            }
+          }
+        }
+      }
+      .leaving {
+        width: 1100px;
+        margin: 10px auto;
+        h4 {
+          padding: 10px 0;
+        }
+        textarea {
+          outline: none;
+          border: 1px solid #d5d5d5;
+        }
+      }
+      .bill {
+        width: 1100px;
+        margin: 10px auto;
+      }
+      .discount {
+        width: 1100px;
+        margin: 10px auto;
+      }
+    }
+  }
+  .split_line {
+    width: 1100px;
+    border-top: 1px solid #d5d5d5;
+    margin: 10px auto;
+  }
+
+  .checked {
+    overflow: hidden;
+    .total {
+      width: 1177px;
+      overflow: hidden;
+      .num {
+        color: #e20000;
+      }
+      > div {
+        float: right;
+        > div {
+          display: flex;
+
+          > div {
+            padding: 15px;
+          }
+        }
+      }
+    }
+    .payable {
+      width: 1177px;
+      background-color: #ebebeb;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      > div {
+        float: right;
+        p {
+          text-align: right;
+          padding: 10px;
+          span {
+            color: #e20000;
+          }
+        }
+      }
+    }
+    .btn {
+      overflow: hidden;
+      margin: 10px auto;
+      button {
+        float: right;
+        border: 0;
+        a {
+          display: inline-block;
+          width: 200px;
+          height: 50px;
+          background-color: #e30000;
+          font-size: 18px;
+          color: #fff;
+          font-weight: bolder;
+          line-height: 50px;
+        }
+      }
+    }
+  }
+}
+.active {
+  position: relative;
+  border: 1px solid #fc0000;
+  .box {
+    position: absolute;
+    display: inline-block;
+    border: 8px solid transparent;
+    border-right: 8px solid #fc0000;
+    border-bottom: 8px solid #fc0000;
+    top: 18px;
+    right: -1px;
+  }
+}
+.active::after {
+  content: '√';
+  position: absolute;
+  top: 10px;
+  right: 0;
+  font-size: 12px;
+  color: #fff;
+}
+</style>

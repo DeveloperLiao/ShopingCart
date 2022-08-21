@@ -69,7 +69,7 @@
         <span>已选择{{totalNum}}件商品&nbsp;&nbsp;</span>
         <span>总价（不含运费）：<i class="totalPrice">{{totalPrice}}</i>&nbsp;&nbsp;</span>
         <button>
-          <a href="">结算</a>
+          <router-link to="/trade">结算</router-link>
         </button>
       </div>
     </div>

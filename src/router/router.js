@@ -6,6 +6,7 @@ import Search from '@/pages/Search/index.vue'
 import Detail from '@/pages/Detail/index.vue'
 import Addcartsuccess from '@/pages/Addcartsuccess/index.vue'
 import ShopCart from '@/pages/ShopCart/index.vue'
+import Trade from '@/pages/Trade/index.vue'
 export default [
   { path: '/', redirect: '/home' },
   {
@@ -48,6 +49,11 @@ export default [
     path: '/shopcart',
     name: 'shopcart',
     component: ShopCart,
+    meta: { isShow: true }
+  },
+  {
+    path: '/trade',
+    component: Trade,
     meta: { isShow: true }
   }
 ]
