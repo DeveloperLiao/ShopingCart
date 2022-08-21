@@ -58,6 +58,7 @@ const actions = {
     let result = await getUserInfo()
     if (result.code == 200) {
       commit('GETUSERINFO', result.data)
+      return 'ok'
     }
   },
   //退出登录
