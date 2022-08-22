@@ -68,6 +68,7 @@
           <textarea
             rows="3"
             cols="150"
+            v-model='msg'
           ></textarea>
         </div>
         <div class="split_line"></div>
@@ -119,7 +120,7 @@
         </div>
       </div>
       <div class="btn">
-        <button><a>提交订单</a></button>
+        <button><a @click="sumitTradeList">提交订单</a></button>
       </div>
       <div>
       </div>
@@ -132,7 +133,10 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'MyTrade',
   data() {
-    return {}
+    return {
+      //买家备注
+      msg: ''
+    }
   },
   mounted() {
     // 派发获取用户地址信息的行为
@@ -145,7 +149,7 @@ export default {
       // 用户地址信息
       addressList: state => state.trade.addressList || [],
       // 交易订单的信息
-      tradeList: state => state.trade.tradeList
+      tradeList: state => state.trade.tradeList || {}
     }),
     // 默认的用户地址信息
     defaultAddress() {
@@ -171,6 +175,27 @@ export default {
     async changeIsDefault(id) {
       await this.addressList.forEach(item => (item.isDefault = 0))
       this.addressList.find(item => item.id == id).isDefault = 1
+    },
+    // 提交订单的信息
+    async sumitTradeList() {
+      // 订单号
+      let tradeNo = this.tradeList.tradeNo
+      let data = {
+        // 收件人信息
+        consignee: this.consignee,
+        // 最终收件人电话
+        consigneeTel: this.phoneNum,
+        // 最终收件地址
+        deliveryAddress: this.defaultAddress.fullAddress,
+        // 支付方式
+        paymentWay: 'ONLINE',
+        // 订单备注
+        orderComment: this.msg,
+        // 存储多个商品对象的数组
+        orderDetailList: this.detailArrayList
+      }
+      let result = await this.$api.postTradeList(tradeNo, data)
+      alert(result.message)
     }
   }
 }

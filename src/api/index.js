@@ -30,3 +30,5 @@ export const loginOut = () => request({ url: 'api/user/passport/logout', method:
 export const getUserAddress = () => request({ url: 'api/user/userAddress/auth/findUserAddressList', method: 'get' })
 // 获取交易页的信息
 export const getTradeList = () => request({ url: 'api/order/auth/trade', method: 'get' })
+// 提交交易页的信息
+export const postTradeList = (tradeNo, data) => request({ url: `api/order/auth/sumbitOrder?${tradeNo}`, data, method: 'post' })
