@@ -26,3 +26,7 @@ export const loginUser = data => request({ url: 'api/user/passport/login', data,
 export const getUserInfo = () => request({ url: 'api/user/passport/auth/getUserInfo', method: 'get' })
 // 退出登录
 export const loginOut = () => request({ url: 'api/user/passport/logout', method: 'get' })
+// 获取用户地址信息
+export const getUserAddress = () => request({ url: 'api/user/userAddress/auth/findUserAddressList', method: 'get' })
+// 获取交易页的信息
+export const getTradeList = () => request({ url: 'api/order/auth/trade', method: 'get' })

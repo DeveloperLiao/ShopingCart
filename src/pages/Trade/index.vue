@@ -5,11 +5,18 @@
       <div class="addressee">
         <h4>收件人信息</h4>
         <div class="detail">
-          <div><span class="name active">张龙<span class="box"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
-          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
-          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
-          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
-          <div><span class="name">张龙</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>北京北京市朝阳区远洋天地5号楼15 1515151515151</span></div>
+          <div
+            v-for="(item,index) in addressList"
+            :key="item.id"
+            @click="changeIsDefault(item.id)"
+          ><span
+              class="name"
+              :class="{active:item.isDefault==1}"
+            >{{item.consignee}}<span class="box"></span></span><span class="address">{{item.userAddress}} {{item.phoneNum}}</span><span
+              class="default"
+              v-show="item.isDefault==1"
+            >默认地址</span></div>
+
         </div>
       </div>
       <div class="split_line"></div>
@@ -29,67 +36,31 @@
           </div>
           <div class="goods">
             <h4>送货清单</h4>
-            <div class="item">
+            <div
+              class="item"
+              v-for="(item,index) in detailArrayList"
+              :key="index"
+            >
               <div class="goods_image">
                 <img
-                  src="./images/phone-1.jpg"
+                  :src="item.imgUrl"
                   style="width:100px;height:100px"
                   alt=""
                 >
               </div>
               <div class="goods_name">
-                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
+                <p>{{item.skuName}}</p>
                 <p>7天无理由退货</p>
               </div>
               <div class="goods_price">
-                <span>￥1299.00</span>
+                <span>￥{{item.orderPrice}}.00</span>
                 &nbsp; &nbsp;
-                <span>1</span>
+                <span>{{item.skuNum}}</span>
                 &nbsp; &nbsp;
                 <span>有货</span>
               </div>
             </div>
 
-            <div class="item">
-              <div class="goods_image">
-                <img
-                  src="./images/phone-1.jpg"
-                  style="width:100px;height:100px"
-                  alt=""
-                >
-              </div>
-              <div class="goods_name">
-                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
-                <p>7天无理由退货</p>
-              </div>
-              <div class="goods_price">
-                <span>￥1299.00</span>
-                &nbsp; &nbsp;
-                <span>1</span>
-                &nbsp; &nbsp;
-                <span>有货</span>
-              </div>
-            </div>
-            <div class="item">
-              <div class="goods_image">
-                <img
-                  src="./images/phone-1.jpg"
-                  style="width:100px;height:100px"
-                  alt=""
-                >
-              </div>
-              <div class="goods_name">
-                <p>Redmi 10X 4G Helio G85游戏芯 4800万超清四摄 5020mAh大电量 小孔全面屏 128GB大存储</p>
-                <p>7天无理由退货</p>
-              </div>
-              <div class="goods_price">
-                <span>￥1299.00</span>
-                &nbsp; &nbsp;
-                <span>1</span>
-                &nbsp; &nbsp;
-                <span>有货</span>
-              </div>
-            </div>
           </div>
         </div>
         <div class="leaving">
@@ -117,10 +88,10 @@
         <div>
           <div>
             <div>
-              <span><i class="num">4</i> 件商品，总商品金额</span>
+              <span><i class="num">{{tradeList.totalNum}}</i> 件商品，总商品金额</span>
             </div>
             <div>
-              <span>￥254699.00</span>
+              <span>￥{{tradeList.totalAmount}}.00</span>
             </div>
           </div>
           <div>
@@ -144,7 +115,7 @@
       <div class="payable">
         <div>
           <p>应付金额：<span>￥5399.00</span></p>
-          <p>配送至：广东深圳市宝安区，收货人：王五 134111111111</p>
+          <p>配送至：{{userAddress}}，收货人：{{consignee}} {{phoneNum}}</p>
         </div>
       </div>
       <div class="btn">
@@ -157,8 +128,51 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
 export default {
-  name: 'MyTrade'
+  name: 'MyTrade',
+  data() {
+    return {}
+  },
+  mounted() {
+    // 派发获取用户地址信息的行为
+    this.$store.dispatch('getUserAddress')
+    // 获取交易页的订单信息
+    this.$store.dispatch('getTradeList')
+  },
+  computed: {
+    ...mapState({
+      // 用户地址信息
+      addressList: state => state.trade.addressList || [],
+      // 交易订单的信息
+      tradeList: state => state.trade.tradeList
+    }),
+    // 默认的用户地址信息
+    defaultAddress() {
+      return this.addressList.find(item => item.isDefault == 1) || []
+    },
+    // 用户名
+    consignee() {
+      return this.defaultAddress.consignee
+    },
+    // 用户地址
+    userAddress() {
+      return this.defaultAddress.userAddress
+    },
+    // 用户电话
+    phoneNum() {
+      return this.defaultAddress.phoneNum
+    },
+    // 交易页的订单信息
+    ...mapGetters(['detailArrayList'])
+  },
+  methods: {
+    // 改变默认地址
+    async changeIsDefault(id) {
+      await this.addressList.forEach(item => (item.isDefault = 0))
+      this.addressList.find(item => item.id == id).isDefault = 1
+    }
+  }
 }
 </script>
 
@@ -174,7 +188,7 @@ export default {
         padding: 20px;
       }
       .detail {
-        div {
+        > div {
           .name {
             display: inline-block;
             width: 120px;
@@ -183,6 +197,28 @@ export default {
             text-align: center;
             line-height: 35px;
             margin: 10px;
+            margin-right: 0;
+          }
+          .default {
+            display: inline-block;
+            width: 55px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+          }
+          .address {
+            display: inline-block;
+            height: 37px;
+            line-height: 37px;
+            padding-left: 10px;
+          }
+          .address:hover {
+            background-color: #ddd;
+            cursor: pointer;
           }
         }
       }

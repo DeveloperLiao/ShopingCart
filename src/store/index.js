@@ -10,6 +10,8 @@ import detail from './detail.js'
 import cart from './cart.js'
 // 引入register和login的仓库
 import user from './user.js'
+// 引入交易页的页面
+import trade from './trade.js'
 // 对外暴露Store的一个实例
 export default new vuex.Store({
   // 大仓库
@@ -18,6 +20,7 @@ export default new vuex.Store({
     search,
     detail,
     cart,
-    user
+    user,
+    trade
   }
 })
