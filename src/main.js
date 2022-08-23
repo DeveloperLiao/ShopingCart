@@ -29,7 +29,7 @@ app.component('Carousel', Carousel)
 app.component('Pagination', Pagination)
 // 使用仓库
 app.use(Store)
-//在Vued的原型属性上全局使用api对象
+//在Vue的原型属性上全局使用api对象
 app.config.globalProperties.$api = api
 // 全局使用bus
 app.config.globalProperties.$bus = bus

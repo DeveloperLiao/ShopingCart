@@ -179,7 +179,7 @@ export default {
     // 提交订单的信息
     async sumitTradeList() {
       // 订单号
-      let tradeNo = this.tradeList.tradeNo
+      let { tradeNo } = this.tradeList
       let data = {
         // 收件人信息
         consignee: this.consignee,

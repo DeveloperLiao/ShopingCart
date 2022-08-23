@@ -7,6 +7,7 @@ import Detail from '@/pages/Detail/index.vue'
 import Addcartsuccess from '@/pages/Addcartsuccess/index.vue'
 import ShopCart from '@/pages/ShopCart/index.vue'
 import Trade from '@/pages/Trade/index.vue'
+import Pay from '@/pages/Pay/index.vue'
 export default [
   { path: '/', redirect: '/home' },
   {
@@ -55,5 +56,10 @@ export default [
     path: '/trade',
     component: Trade,
     meta: { isShow: true }
+  },
+  {
+    path: '/pay',
+    component: Pay,
+    meta: { isShow: false }
   }
 ]
