@@ -31,12 +31,62 @@
         <h3>支付平台</h3>
         <div class="payment">
           <ul>
-            <li>支付宝</li>
-            <li>微信</li>
+            <li><img
+                src="./images/zfb.jpg"
+                alt=""
+              ></li>
+            <li><img
+                src="./images/wxzf.png"
+                alt=""
+              ></li>
+          </ul>
+        </div>
+      </div>
+      <div class="split_line"></div>
+      <div>
+        <h3>支付网银</h3>
+        <div class="payment">
+          <ul>
+            <li><img
+                src="./images/zsyh.png"
+                alt=""
+              ></li>
+            <li><img
+                src="./images/yzyh.png"
+                alt=""
+              ></li>
+            <li><img
+                src="./images/nyyh.png"
+                alt=""
+              ></li>
+          </ul>
+        </div>
+      </div>
+      <div class="split_line"></div>
+      <div class="btn">
+        <button><a>立即支付</a></button>
+      </div>
+      <div>
+        <h3>其他支付方式</h3>
+        <div class="payment">
+          <ul>
+            <li><img
+                src="./images/zsyh.png"
+                alt=""
+              ></li>
+            <li><img
+                src="./images/yzyh.png"
+                alt=""
+              ></li>
+            <li><img
+                src="./images/nyyh.png"
+                alt=""
+              ></li>
           </ul>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -104,6 +154,30 @@ export default {
       overflow: hidden;
       li {
         float: left;
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #c9c5c9;
+      }
+    }
+  }
+  .split_line {
+    border-top: 1px solid #d1d1d3;
+    width: 1100px;
+    margin: 10px auto;
+  }
+  .btn {
+    width: 150px;
+    margin: 10px auto;
+    button {
+      background-color: #db0000;
+      border: 0;
+      a {
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        font-weight: bold;
       }
     }
   }
