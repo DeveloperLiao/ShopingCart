@@ -115,7 +115,7 @@
       </div>
       <div class="payable">
         <div>
-          <p>应付金额：<span>￥5399.00</span></p>
+          <p>应付金额：<span>￥{{tradeList.totalAmount}}.00</span></p>
           <p>配送至：{{userAddress}}，收货人：{{consignee}} {{phoneNum}}</p>
         </div>
       </div>
@@ -135,7 +135,9 @@ export default {
   data() {
     return {
       //买家备注
-      msg: ''
+      msg: '',
+      // 订单号,接口有错误，获取不到订单号，默认为10549
+      orderId: 10549
     }
   },
   mounted() {
@@ -143,6 +145,7 @@ export default {
     this.$store.dispatch('getUserAddress')
     // 获取交易页的订单信息
     this.$store.dispatch('getTradeList')
+
   },
   computed: {
     ...mapState({
@@ -194,8 +197,15 @@ export default {
         // 存储多个商品对象的数组
         orderDetailList: this.detailArrayList
       }
+      //拿到订单号
       let result = await this.$api.postTradeList(tradeNo, data)
-      alert(result.message)
+      if (result.code == 200) {
+        this.orderId = result.orderId
+        this.$router.push(`/pay/${this.orderId}`)
+      } else {
+        // 跳转到支付页面
+        this.$router.push(`/pay/${this.orderId}`)
+      }
     }
   }
 }

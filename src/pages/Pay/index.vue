@@ -5,7 +5,7 @@
         <h2>订单提交成功，请您及时付款，以便尽快为您发货~~</h2>
       </div>
       <div class="tip">
-        <div><span>请你在提交订单<i class="colora50000">4小时</i> 后之内完成支付，超时订单会自动取消，订单号：145687</span><span>应付金额：<i class="price colora50000">￥17,654</i></span></div>
+        <div><span>请你在提交订单<i class="colora50000">4小时</i> 后之内完成支付，超时订单会自动取消，订单号：{{orderId}}</span><span>应付金额：<i class="price colora50000">￥{{tradeList.totalAmount}}</i></span></div>
       </div>
     </div>
     <div class="important">
@@ -64,7 +64,7 @@
       </div>
       <div class="split_line"></div>
       <div class="btn">
-        <button><a>立即支付</a></button>
+        <button><a @click="setup">立即支付</a></button>
       </div>
       <div>
         <h3>其他支付方式</h3>
@@ -91,8 +91,52 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { Dialog } from 'vant'
+import 'vant/es/dialog/style'
 export default {
-  name: 'MyPay'
+  name: 'MyPay',
+
+  mounted() {
+    // this.getPayData()
+    // 获取交易页的订单信息
+    this.$store.dispatch('getTradeList')
+  },
+  methods: {
+    // 获取支付页的数据
+    // async getPayData() {
+    //   try {
+    //     let orderId = this.orderId
+    //     let result = await this.$api.getPayData(orderId)
+    //   } catch (error) {
+    //     alert(error.messsage)
+    //   }
+    // },
+    setup() {
+      Dialog({
+        title: '微信支付',
+        message: "<img src='https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg' style='width:150px;height:150px'>",
+        // 是否显示确认按钮
+        showConfirmButton: true,
+        // 是否显示取消按钮
+        showCancelButton: true,
+        // 确认按钮文案
+        confirmButtonText: '已支付',
+        //	是否允许 message 内容中渲染 HTML
+        allowHtml: true
+      })
+    }
+  },
+  computed: {
+    // 路由参数中的订单号
+    orderId() {
+      return this.$route.params.orderId
+    },
+    ...mapState({
+      // 交易订单的信息
+      tradeList: state => state.trade.tradeList || {}
+    })
+  }
 }
 </script>
 

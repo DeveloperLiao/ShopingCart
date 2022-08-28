@@ -58,7 +58,7 @@ export default [
     meta: { isShow: true }
   },
   {
-    path: '/pay',
+    path: '/pay/:orderId',
     component: Pay,
     meta: { isShow: false }
   }

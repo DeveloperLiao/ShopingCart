@@ -1,5 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 const webpack = require('webpack')
+const { VantResolver } = require('unplugin-vue-components/resolvers')
+const ComponentsPlugin = require('unplugin-vue-components/webpack')
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
@@ -15,6 +17,9 @@ module.exports = defineConfig({
         $: 'jquery',
         jQuery: 'jquery',
         'windows.jQuery': 'jquery'
+      }),
+      ComponentsPlugin({
+        resolvers: [VantResolver()]
       })
     ]
   }

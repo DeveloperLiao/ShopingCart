@@ -32,3 +32,5 @@ export const getUserAddress = () => request({ url: 'api/user/userAddress/auth/fi
 export const getTradeList = () => request({ url: 'api/order/auth/trade', method: 'get' })
 // 提交交易页的信息
 export const postTradeList = (tradeNo, data) => request({ url: `api/order/auth/sumbitOrder?${tradeNo}`, data, method: 'post' })
+// 获取订单支付信息
+export const getPayData = orderId => request({ url: `api/payment/weixin/createNative?${orderId}`, method: 'get' })

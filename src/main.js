@@ -20,15 +20,18 @@ import 'swiper/css/swiper.min.css'
 import bus from '@/EventBus/index.js'
 // 将api全部引入
 import * as api from '@/api/index'
+
 const app = createApp(App)
 // 使用路由
 app.use(router)
+
 // 使用全局组件
 app.component('TypeBar', TypeBar)
 app.component('Carousel', Carousel)
 app.component('Pagination', Pagination)
 // 使用仓库
 app.use(Store)
+
 //在Vue的原型属性上全局使用api对象
 app.config.globalProperties.$api = api
 // 全局使用bus
