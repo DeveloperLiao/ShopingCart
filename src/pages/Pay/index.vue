@@ -94,9 +94,20 @@
 import { mapState } from 'vuex'
 import { Dialog } from 'vant'
 import 'vant/es/dialog/style'
+// 自动生成支付二维码
+import QRCode from 'qrcode'
 export default {
   name: 'MyPay',
-
+  data() {
+    return {
+      // 支付二维码的URL
+      codeUrl: 'weixin://wxpay/binzpayerl?pr=FmFSw2mzz',
+      // 定时器
+      timer: null,
+      // 账单号
+      orderId: 10556
+    }
+  },
   mounted() {
     // this.getPayData()
     // 获取交易页的订单信息
@@ -112,19 +123,29 @@ export default {
     //     alert(error.messsage)
     //   }
     // },
-    setup() {
-      Dialog({
-        title: '微信支付',
-        message: "<img src='https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg' style='width:150px;height:150px'>",
-        // 是否显示确认按钮
-        showConfirmButton: true,
-        // 是否显示取消按钮
-        showCancelButton: true,
-        // 确认按钮文案
-        confirmButtonText: '已支付',
-        //	是否允许 message 内容中渲染 HTML
-        allowHtml: true
-      })
+    async setup() {
+      try {
+        // 生成支付的二维码
+        let codeUrl = await QRCode.toDataURL(this.codeUrl)
+        Dialog({
+          title: '微信支付',
+          message: `<img src='${codeUrl}'>`,
+          // 是否显示确认按钮
+          showConfirmButton: true,
+          // 是否显示取消按钮
+          showCancelButton: true,
+          // 确认按钮文案
+          confirmButtonText: '已支付',
+          // 取消按钮文案
+          cancelButtonText: '支付遇到问题',
+          //	是否允许 message 内容中渲染 HTML
+          allowHtml: true
+        })
+        let result = await this.$api.getPayStatus(this.orderId)
+        console.log(result)
+      } catch (error) {
+        alert(error.message)
+      }
     }
   },
   computed: {
