@@ -8,6 +8,10 @@ import Addcartsuccess from '@/pages/Addcartsuccess/index.vue'
 import ShopCart from '@/pages/ShopCart/index.vue'
 import Trade from '@/pages/Trade/index.vue'
 import Pay from '@/pages/Pay/index.vue'
+import PaySuccess from '@/pages/PaySuccess/index.vue'
+import Center from '@/pages/Center/index.vue'
+import MyOrder from '@/pages/MyOrder/index.vue'
+import GroupOrder from '@/pages/GroupOrder/index.vue'
 export default [
   { path: '/', redirect: '/home' },
   {
@@ -61,5 +65,20 @@ export default [
     path: '/pay/:orderId',
     component: Pay,
     meta: { isShow: false }
+  },
+  {
+    path: '/paysuccess',
+    component: PaySuccess,
+    meta: { isShow: false }
+  },
+  {
+    path: '/center',
+    redirect: { path: '/center/myorder' },
+    component: Center,
+    meta: { isShow: false },
+    children: [
+      { path: 'myorder', component: MyOrder },
+      { path: 'grouporder', component: GroupOrder }
+    ]
   }
 ]

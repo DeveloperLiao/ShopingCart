@@ -105,7 +105,9 @@ export default {
       // 定时器
       timer: null,
       // 账单号
-      orderId: 10556
+      defaultOrderId: 10556,
+      // 支付状态码
+      status: ''
     }
   },
   mounted() {
@@ -127,7 +129,22 @@ export default {
       try {
         // 生成支付的二维码
         let codeUrl = await QRCode.toDataURL(this.codeUrl)
-        Dialog({
+        //设置定时器，不断向服务器发送请求
+        let flag = true
+        this.timer = setInterval(() => {
+          // let result = await this.$api.getPayStatus(this.defaultOrderId)
+          // let status=result.code
+          let status = 200
+          this.status = status
+          if (this.status === 200) {
+            clearInterval(this.timer)
+            this.timer = null
+          } else {
+            console.log('支付失败')
+          }
+        }, 1000)
+
+        Dialog.alert({
           title: '微信支付',
           message: `<img src='${codeUrl}'>`,
           // 是否显示确认按钮
@@ -139,10 +156,27 @@ export default {
           // 取消按钮文案
           cancelButtonText: '支付遇到问题',
           //	是否允许 message 内容中渲染 HTML
-          allowHtml: true
+          allowHtml: true,
+          // 关闭前的回调函数，返回 false 可阻止关闭，支持返回 Promise
+          beforeClose: async type => {
+            // 点击支付遇到问题
+            if (type === 'cancel') {
+              await alert('请联系客服')
+              return true
+            }
+            // 点击支付成功
+            if (type === 'confirm') {
+              if (this.status === 200) {
+                this.$router.push('/paysuccess')
+                return true
+              } else {
+                alert('支付失败')
+              }
+            }
+          }
         })
-        let result = await this.$api.getPayStatus(this.orderId)
-        console.log(result)
+          .then(() => {})
+          .catch(() => {})
       } catch (error) {
         alert(error.message)
       }

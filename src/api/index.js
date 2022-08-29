@@ -36,4 +36,5 @@ export const postTradeList = (tradeNo, data) => request({ url: `api/order/auth/s
 export const getPayData = orderId => request({ url: `api/payment/weixin/createNative?${orderId}`, method: 'get' })
 // 获取支付状态信息
 export const getPayStatus = orderId => request({ url: `api/payment/weixin/queryPayStatus?${orderId}`, method: 'get' })
-
+// 获取我的订单列表
+export const getOrderList = (page, limit) => request({ url: `api/order/auth/${page}/${limit}`, method: 'get' })
