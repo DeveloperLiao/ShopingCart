@@ -13,68 +13,117 @@
         <li class="operation">操作</li>
       </ul>
     </div>
-    <div class="order">
-      <div class="time">
-        <span>2017-02-11 11:59</span>&nbsp;&nbsp;
-        <span>订单编号:7867473872181848</span>
+    <div
+      class="order"
+      v-for="(item1,index) in orderList.records"
+      :key="item1.id"
+    >
+      <div class="number">
+        <div class="time">
+          <span>{{item1.createTime}}</span>&nbsp;&nbsp;
+          <span>订单编号:{{item1.outTradeNo}}</span>
+        </div>
+        <div class="del"><a>×</a></div>
       </div>
-      <div class="del"><a>×</a></div>
+      <div class="table">
+        <table>
+          <tr
+            v-for="(item2,index) in item1.orderDetailList"
+            :key="item2.id"
+          >
+            <td class="first">
+              <ul>
+                <li>
+                  <ul class="order_content">
+                    <li class="image">
+                      <img
+                        :src="item2.imgUrl"
+                        alt=""
+                        style="width:80px;height:80px"
+                      >
+                    </li>
+                    <li>
+                      <p>{{item2.skuName}}</p>
+                    </li>
+                    <li>×{{item2.skuNum}}</li>
+                    <li>售后申请</li>
+                  </ul>
+                </li>
+              </ul>
+            </td>
+            <td
+              class="name"
+              :rowspan="item1.orderDetailList.length"
+              v-if="index===0"
+            >{{item1.consignee}}</td>
+            <td
+              class="price"
+              :rowspan="item1.orderDetailList.length"
+              v-if="index===0"
+            >
+              <p>总金额￥{{item1.totalAmount}}</p>
+              <p>{{item1.paymentWay}}</p>
+            </td>
+            <td
+              class="complete"
+              :rowspan="item1.orderDetailList.length"
+              v-if="index===0"
+            >{{item1.orderStatusName}}</td>
+            <td
+              class="evaluate"
+              :rowspan="item1.orderDetailList.length"
+              v-if="index===0"
+            >评价|晒单</td>
+          </tr>
+
+        </table>
+      </div>
     </div>
-    <div class="table">
-      <table>
-        <tr>
-          <td class="first">
-            <ul>
-              <li>
-                <ul class="order_content">
-                  <li class="image">
-                    <img
-                      src="./images/shouji.png"
-                      alt=""
-                      style="width:80px;height:80px"
-                    >
-                  </li>
-                  <li>
-                    <p>包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</p>
-                  </li>
-                  <li>×1</li>
-                  <li>售后申请</li>
-                </ul>
-              </li>
-              <li>
-                <ul class="order_content">
-                  <li class="image">
-                    <img
-                      src="./images/shouji.png"
-                      alt=""
-                      style="width:80px;height:80px"
-                    >
-                  </li>
-                  <li>
-                    <p>包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</p>
-                  </li>
-                  <li>×1</li>
-                  <li>售后申请</li>
-                </ul>
-              </li>
-            </ul>
-          </td>
-          <td class="name">小丽</td>
-          <td class="price">
-            <p>总金额￥138.00</p>
-            <p>在线支付</p>
-          </td>
-          <td class="complete">已完成</td>
-          <td class="evaluate">评价|晒单</td>
-        </tr>
-      </table>
-    </div>
+    <!-- 分页器 -->
+    <Pagination
+      :pageSize='limit'
+      :pageNo='page'
+      :total='orderList.total'
+      :continue='5'
+      @currentPage='currentPage'
+    ></Pagination>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MyOrder'
+  name: 'MyOrder',
+  data() {
+    return {
+      // 当前页
+      page: 1,
+      // 每页显示多少条数据
+      limit: 2,
+      // 存储订单的数据
+      orderList: {}
+    }
+  },
+  mounted() {
+    this.getOrderList()
+  },
+  methods: {
+    // 获取订单的数据
+    async getOrderList() {
+      let { page, limit } = this
+      let result = await this.$api.getOrderList(page, limit)
+      if (result.code === 200) {
+        this.orderList = result.data
+      } else {
+        alert('数据获取失败！')
+      }
+    },
+    //接收最新的当前页的页码值
+    currentPage(pagenum) {
+      this.page = pagenum
+      // 发起请求
+      this.getOrderList()
+    }
+  }
 }
 </script>
 
@@ -90,7 +139,6 @@ export default {
     padding: 0 5px;
   }
   .name {
-    margin: 10px 0;
     ul {
       overflow: hidden;
       background-color: #ddd;
@@ -125,63 +173,66 @@ export default {
     }
   }
   .order {
-    overflow: hidden;
-    border: 1px solid #eee;
-    background-color: #ddd;
-    height: 35px;
-    line-height: 35px;
-    .time {
-      float: left;
+    margin: 10px 0;
+    .number {
+      border: 1px solid #eee;
+      background-color: #ddd;
+      height: 35px;
+      line-height: 35px;
+      .time {
+        float: left;
+      }
+      .del {
+        float: right;
+        padding: 0 10px;
+      }
     }
-    .del {
-      float: right;
-      padding: 0 10px;
-    }
-  }
-  .table {
-    tr {
-      td {
+    .table {
+      tr {
         border: 1px solid #ccc;
-        border-top: 0;
-        text-align: center;
-        > ul {
-          > li {
-            .order_content {
-              width: 550px;
-              overflow: hidden;
-              border-bottom: 1px solid #ccc;
-              .image {
-                width: 100px;
-                height: 100px;
-                border: 1px solid #ccc;
-                margin: 10px;
-              }
-              li {
-                float: left;
-                padding: 10px;
-                p {
-                  width: 250px;
-                  color: #f13;
+        td {
+          border: 1px solid #ccc;
+          border-top: 0;
+          text-align: center;
+          > ul {
+            > li {
+              .order_content {
+                width: 550px;
+                overflow: hidden;
+
+                .image {
+                  width: 100px;
+                  height: 100px;
+                  border: 1px solid #ccc;
+                  margin: 10px;
+                }
+                li {
+                  float: left;
+                  padding: 10px;
+                  p {
+                    width: 250px;
+                    color: #f13;
+                  }
                 }
               }
             }
           }
         }
-      }
-      .first {
-        border-bottom: 0;
-      }
-      .name {
-        width: 100px;
-      }
-      .price {
-        width: 100px;
-      }
-      .complete {
-        width: 100px;
-      }
-      .evaluate {
-        width: 100px;
+        .first {
+          border-bottom: 0;
+        }
+        .name {
+          width: 100px;
+        }
+        .price {
+          width: 100px;
+        }
+        .complete {
+          width: 100px;
+        }
+        .evaluate {
+          width: 100px;
+        }
       }
     }
   }
