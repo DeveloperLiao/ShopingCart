@@ -184,6 +184,7 @@ export default {
 
     .sort {
       position: absolute;
+      height: 466px;
       top: 43px;
       left: 0;
       z-index: 999;

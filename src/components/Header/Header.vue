@@ -10,8 +10,10 @@
         </div>
         <div class="nav_right">
           <ul class="nav_listItem">
-            <li>我的订单 &nbsp;|</li>
-            <li>&nbsp;我的购物车&nbsp;|</li>
+            <li>
+              <router-link to="/trade">我的订单</router-link> &nbsp;|
+            </li>
+            <li>&nbsp;<router-link to="/shopcart">我的购物车</router-link>&nbsp;|</li>
             <li>&nbsp;我的尚品汇&nbsp;|</li>
             <li>&nbsp;尚品汇会员&nbsp;|</li>
             <li>&nbsp;企业采购&nbsp;|</li>
@@ -61,7 +63,6 @@ export default {
     this.$bus.on('keyword', val => {
       this.key = val
     })
- 
   },
   methods: {
     // 搜索

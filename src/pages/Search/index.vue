@@ -45,7 +45,7 @@
             :key="goods.id"
           >
             <router-link :to="'/detail/'+goods.id"><img
-                :src="goods.defaultImg"
+                v-lazy="goods.defaultImg"
                 alt="!"
                 class="goods-img"
               ></router-link>

@@ -64,12 +64,30 @@ export default [
   {
     path: '/pay/:orderId',
     component: Pay,
-    meta: { isShow: false }
+    meta: { isShow: false },
+    //路由独享守卫,只能接受来自trade的路由
+    beforeEnter: (to, from) => {
+      if (from.path == '/trade') {
+        return true
+      } else {
+        // 从哪里来往哪里去
+        return false
+      }
+    }
   },
   {
     path: '/paysuccess',
     component: PaySuccess,
-    meta: { isShow: false }
+    meta: { isShow: false },
+    //路由独享守卫,只能接受来自pay的路由
+    beforeEnter: (to, from) => {
+      if (from.path.indexOf('/pay') != -1) {
+        return true
+      } else {
+        // 从哪里来往哪里去
+        return false
+      }
+    }
   },
   {
     path: '/center',

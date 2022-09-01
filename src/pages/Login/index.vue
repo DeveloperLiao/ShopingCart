@@ -92,8 +92,10 @@ export default {
       try {
         let { phone, password } = this
         let data = { phone, password }
+        // 检查在路由中有没有query参数，如果有则跳转，没有则跳转到/home
+        let toPath = this.$route.query.redirect || '/home'
         // 手机号和密码必须都不为空才派发请求
-        phone && password && (await this.$store.dispatch('loginUser', data)) && this.$router.push('/home')
+        phone && password && (await this.$store.dispatch('loginUser', data)) && this.$router.push(toPath)
       } catch (error) {
         alert(error.message)
       }

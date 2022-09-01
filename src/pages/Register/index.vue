@@ -6,7 +6,7 @@
         <a href="">登录</a>
       </span>
     </div>
-    <div class="form_border">
+    <!-- <div class="form_border">
       <form class="form">
         <div class="content">
           <label for="phoneNumber">手机号:&nbsp;&nbsp;</label>
@@ -71,6 +71,81 @@
           </button>
         </div>
       </form>
+    </div>  -->
+    <div class="form_border">
+      <Form
+        class="form"
+        :validation-schema="schema"
+      >
+        <div class="content">
+          <label for="phoneNumber">手机号:&nbsp;&nbsp;</label>
+          <Field
+            name='phone'
+            type="text"
+            id="phoneNumber"
+            v-model="phone"
+            placeholder="请输入手机号"
+          />
+          <ErrorMessage name='phone'></ErrorMessage>
+        </div>
+        <div class="content">
+          <label for="code">验证码:&nbsp;&nbsp;</label>
+          <Field
+            name='code'
+            type="text"
+            id="code"
+            placeholder="请输入验证码"
+            autocomplete="off"
+            v-model="code"
+          />
+          <ErrorMessage name='code'></ErrorMessage>
+          <button
+            class="sendCode"
+            @click.prevent="sendCode"
+          >发送验证码</button>
+        </div>
+        <div class="content">
+          <label for="login_password">登录密码:&nbsp;&nbsp;</label>
+          <Field
+            name='password'
+            type="password"
+            id="login_password"
+            placeholder="请输入密码"
+            autocomplete="off"
+            v-model="password"
+            ref="formRef"
+          />
+          <ErrorMessage name='password'></ErrorMessage>
+        </div>
+        <div class="content">
+          <label for="comfirmPsw">确认密码:&nbsp;&nbsp;</label>
+          <Field
+            name='comfirmPsw'
+            type="password"
+            id="comfirmPsw"
+            placeholder="请输入密码"
+            autocomplete="off"
+            v-model="password1"
+          />
+          <ErrorMessage name='comfirmPsw'></ErrorMessage>
+        </div>
+        <div class="agreement">
+          <Field
+            name='check'
+            type="checkbox"
+            id="agree"
+            @click="changeIschecked"
+            v-model="isChecked"
+          />
+          <label for="agree">同意协议并注册《尚品汇用户协议》&nbsp;&nbsp;</label>
+          <ErrorMessage name='check'></ErrorMessage>
+        </div>
+        <div class="btn">
+          <button>
+            <a @click.prevent="register">完成注册</a>
+          </button>
+        </div>
+      </Form>
     </div>
     <div class="copyright">
       <ul>
@@ -91,6 +166,10 @@
 
 <script>
 import { mapState } from 'vuex'
+//引入vee-validate
+import { Field, Form, ErrorMessage } from 'vee-validate'
+// 引入自定义规则
+import { schema } from '@/plugin/vee-validate.js'
 export default {
   name: 'MyRegister',
   data() {
@@ -104,7 +183,9 @@ export default {
       // 再次确认密码
       password1: '',
       // 控制是否同意用户协议
-      isChecked: true
+      isChecked: false,
+      // 表单验证规则
+      schema: schema
     }
   },
   methods: {
@@ -117,28 +198,35 @@ export default {
     // 用户注册
     async register() {
       try {
-        let { phone, code, password, password1, isChecked } = this
-        let data = {
-          phone,
-          code,
-          // 两次密码必须相同
-          password: password == password1 && password
+        // 验证全部通过的返回值
+        let { valid } = await this.$refs.formRef.validate()
+        if (valid) {
+          let { phone, code, password, password1, isChecked } = this
+          let data = {
+            phone,
+            code,
+            password
+          }
+          ;(await this.$store.dispatch('registerUser', data)) && this.$router.push('/login')
         }
-        // 三个参数都必须不为空才发起请求,最后跳转到登录页面
-        phone && code && password && isChecked && (await this.$store.dispatch('registerUser', data)) && this.$router.push('/login')
       } catch (error) {
         alert(error.message)
       }
     },
     // 改变checkBox的状态
-    changeIschecked() {
-      this.isChecked = !this.isChecked
+    changeIschecked(event) {
+      this.isChecked = event.target.checked
     }
   },
   computed: {
     ...mapState({
       identify_code: state => state.user.code
     })
+  },
+  components: {
+    Field,
+    Form,
+    ErrorMessage
   }
 }
 </script>
@@ -172,6 +260,8 @@ export default {
       margin: 0 auto;
       border-top: 0;
       .content {
+        width: 480px;
+        position: relative;
         label {
           display: inline-block;
           width: 70px;
@@ -180,8 +270,12 @@ export default {
           width: 300px;
           height: 30px;
         }
-        p {
+        span {
+          position: absolute;
           color: #c04944;
+          top: 40px;
+          left: 80px;
+          font-size: 12px;
         }
         .sendCode {
           position: absolute;
@@ -190,10 +284,15 @@ export default {
         padding: 10px;
       }
       .agreement {
+        position: relative;
         width: 250px;
-        margin: 0 auto;
-        p {
+        margin: 15px auto;
+        span {
+          position: absolute;
           color: #c04944;
+          top: 20px;
+          left: 15px;
+          font-size: 12px;
         }
       }
       .btn {

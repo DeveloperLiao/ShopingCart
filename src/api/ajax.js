@@ -3,8 +3,8 @@ import axios from 'axios'
 // 引入nprogress
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-// 引入detail仓库
-import store from '@/store/index'
+// 引入仓库
+import store from '@/store/index.js'
 const request = axios.create({
   // 本地服务器的地址
   baseURL: 'http://192.168.59.199:8080/',

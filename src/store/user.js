@@ -1,6 +1,6 @@
 // 登录和注册的仓库
 import { sendCode, registerUser, loginUser, getUserInfo, loginOut } from '@/api/index.js'
-import { saveToken, getToken, removeToken } from '@/utils/token'
+import { saveToken, getToken, removeToken } from '@/utils/token/index.js'
 const state = {
   // 验证码
   code: '',
@@ -44,10 +44,9 @@ const actions = {
   async loginUser({ commit }, data) {
     let result = await loginUser(data)
     if (result.code == 200) {
-      commit('LOGINUSER', result.data.token)
       // 持久化存储token
       saveToken(result.data.token)
-
+      commit('LOGINUSER', result.data.token)
       return 'ok'
     } else {
       return Promise.reject(new Error('faile'))
