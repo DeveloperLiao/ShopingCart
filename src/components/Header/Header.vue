@@ -105,7 +105,7 @@ export default {
 <style lang='less' scoped>
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   background-color: #eee;
   padding: 10px 25px;
   .nav_left span {
@@ -123,7 +123,7 @@ export default {
 
 .search {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 5px 25px;
   .search_right {
     display: flex;

@@ -58,8 +58,9 @@
               <ul>
                 <li>帮助中心</li>
                 <li><img
-                    src="./images/ewm.jpg"
+                    src="./images/ewm.png"
                     alt="!"
+                    style="display:inline-block; width:77px;height:77px"
                   /></li>
               </ul>
             </li>
@@ -107,7 +108,11 @@ export default {
     padding: 10px;
     .footer_top_list {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+      > li {
+        margin: 0 60px;
+      }
+
       li ul li {
         font-size: 12px;
       }
@@ -134,6 +139,4 @@ export default {
     }
   }
 }
-
-
 </style>
